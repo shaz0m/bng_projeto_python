@@ -9,11 +9,16 @@
 <body>
     
     <header>
+        <div id='topo'>
+            <p>Bem-vindo {{ utilizador.id }}</p>
+            <p>Log Out</p> <!-- a rever -->
+        </div>
         <h1>Boards & Games</h1>
         <nav>
-
-            
-            
+            <a href="{{ url_for('paginaInicial') }}">Página Inicial</a>
+            <a href="{{ url_for('perfil') }}">Meu Perfil</a>
+            <a href="{{ url_for('colecao') }}">Minha Coleção</a>
+            <a href="{{ url_for('todosJogos') }}">Todos os Jogos</a>
         </nav>
 
         <hr>
