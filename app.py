@@ -9,10 +9,7 @@ app.secret_key = "01031315"
 def inicio(): 
     return render_template('login.html')
 
-@app.route('/login')
-def login(): 
-    return render_template('login.html')
-
+#-- Gerir Sessão -------------------------------------------------
 #redireciona sempre para login se nao houver sessao iniciada
 @app.route('/') 
 def dashboard(): 
@@ -26,20 +23,33 @@ def logout():
     session.clear()
     return redirect('/login')
 
-@app.route('/perfil/<id>', methods = ["GET"])
-def perfil(id):
+@app.route('/login')
+def login(): 
+    return render_template('login.html')
+
+#------------------------------------------------------------------
+
+#-- Tipo de Conta -------------------------------------------------
+
+
+#------------------------------------------------------------------
+
+#-- Tratar Utilizador ---------------------------------------------
+@app.route('/perfil', methods = ["GET"])
+def perfil():
     bd = obter_ligacao()
     cursor = bd.cursor(dictionary=True)
 
-    cursor.execute("select * from utilizador where id = %s", (id))
+    cursor.execute("select * from utilizador where id = %s", (session[id]))
     utili = cursor.fetchone()
 
-    cursor.execute("select count(*) from elementocolecao where idUtilizador = %s", (id))
+    cursor.execute("select count(*) from elementocolecao where idUtilizador = %s", (session[id]))
     numJogos = cursor.fetchone()
     
     cursor.close()
     bd.close()
     return render_template('perfil.html', utili=utili, numJogos = numJogos)
+#------------------------------------------------------------------
 
 
 if __name__ == "__main__" :
