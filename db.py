@@ -7,3 +7,13 @@ def obter_ligacao():
         password = '123.Abc',
         database = 'apdz0125_gnb_projeto_python'
     )
+
+def fetch_all(query, params=None):
+    conn = obter_ligacao()
+    try:
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute(query, params or ())
+        return cursor.fetchall()
+    finally:
+        cursor.close()
+        conn.close()
