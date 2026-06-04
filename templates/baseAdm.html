@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/static/estilos.css">
+</head>
+<body>
+    <header>
+        <div id="topo">
+            <p>Bem-vindo {{ utili.id }}</p>
+            <p>Log Out</p>
+        </div>
+        <div id="logoTopo">
+            <img src="/static/img/logo.png" alt="logo" id="logo">
+            <h1>Boards &amp; Games</h1>
+        </div>
+        <nav>
+        </nav>
+
+        <hr>
+    </header>
+    <main>
+        {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>Boards &amp; Games</p>
+    </footer>
+</body>
+</html>
