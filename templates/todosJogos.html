@@ -5,11 +5,13 @@
 
 <table>
     <tr>
-        <td><button>⭐</button>  Favoritos</td>
-        <td><button>⬛</button>  Jogado</td>
-        <td><button>⬜</button>  Possui</td>
-        <td><input type="text" placeholder="Buscar jogo..."></td>
-        <td><button>🤍</button>  Minha coleção</td>
+        <form method="GET" action="{{ url_for('filtrar_jogos') }}">
+        <td><input type="checkbox" name="filtro" value="favoritos" onchange="this.form.submit()" {% if "favoritos" in filtros %}checked{% endif %}> Favoritos</td>
+        <td><input type="checkbox" name="filtro" value="jogados" onchange="this.form.submit()" {% if "jogados" in filtros %}checked{% endif %}>  Jogado</td>
+        <td><input type="checkbox" name="filtro" value="possui" onchange="this.form.submit()" {% if "possui" in filtros %}checked{% endif %}>  Possui</td>
+        <td><input type="text" name="pesquisa" placeholder="Buscar jogo..." onchange="this.form.submit()"></td>
+        <td><input type="checkbox" name="filtro" value="colecao" onchange="this.form.submit()" {% if "colecao" in filtros %}checked{% endif %}>  Minha coleção</td>
+        </form>
     </tr>
 </table>
 
