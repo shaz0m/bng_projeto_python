@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<div id="detalheJogo">
+
+    <div id="imagemJogo">
+        <img src="/static/img/jogos/{{ jogo.imagem }}" alt="{{ jogo.nome }}">
+    </div>
+
+    <div id="infoJogo">
+
+        <div id="cabecalhoJogo">
+            <h1>{{ jogo.nome }}</h1>
+            <p>Rank: {{ jogo.rank }}</p>
+        </div>
+
+        <p>Ano publicado: {{ jogo.ano }}</p>
+        <p>Min Jogadores: {{ jogo.minJogadores }}</p>
+        <p>Max Jogadores: {{ jogo.maxJogadores }}</p>
+        <p>Min Idade: {{ jogo.minIdade }}</p>
+        <p>Duração de partida média: {{ jogo.duracaoMedia }} min</p>
+        <p>Avaliação: {{ jogo.avaliacao }} ({{ jogo.numAvaliacoes }} avaliações)</p>
+
+        <form method="POST" action="/jogo/{{ jogo.id }}">
+
+            <label>
+                <input type="checkbox" name="favorito"
+                {% if elemento and elemento.favorito %}checked{% endif %}>
+                Favorito
+            </label>
+
+            <label>
+                <input type="checkbox" name="jogado"
+                {% if elemento and elemento.jogado %}checked{% endif %}>
+                Jogado
+            </label>
+
+            <label>
+                <input type="checkbox" name="possui"
+                {% if elemento and elemento.possui %}checked{% endif %}>
+                Possui
+            </label>
+
+            <button type="submit">
+                {% if elemento %}
+                    Guardar alterações
+                {% else %}
+                    Adicionar à minha coleção
+                {% endif %}
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

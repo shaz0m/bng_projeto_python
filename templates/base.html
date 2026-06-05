@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente</title>
+    <link rel="stylesheet" href="/static/estilos.css">
+</head>
+<body>
+    <header>
+        <div id="topo">
+            <p>Bem-vindo {{ utili.id }}</p>
+            <p><a href="{{ url_for('logout') }}">Log Out</a></p>
+        </div>
+
+        <div id="logoTopo">
+            <img src="/static/img/logo.png" alt="logo" id="logo">
+            <h1>Boards &amp; Games</h1>
+        </div>
+
+    <nav>
+    <a href="{{ url_for('perfil') }}">Página Inicial</a>
+    <a href="{{ url_for('perfil') }}">Meu Perfil</a>
+    <a href="/todos-jogos">Minha Coleção</a>
+    <a href="/todos-jogos">Todos os Jogos</a>
+    </nav>
+
+        <hr>
+    </header>
+
+    <main>
+        {% block conteudo %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>Boards &amp; Games</p>
+    </footer>
+</body>
+</html>

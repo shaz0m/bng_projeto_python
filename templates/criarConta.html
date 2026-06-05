@@ -1,0 +1,25 @@
+{% extends "baseConta.html" %}
+{% block conteudo %}
+<h2>Criar Conta</h2>
+{% with msgs = get_flashed_messages(with_categories=true) %}
+  {% if msgs %}
+    {% for categoria, msg in msgs %}
+<p><strong>{{ msg }}</strong></p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<form method="POST" action="/criar-conta">
+<label>Nome de Utilizador</label>
+<input type="text" name="nome" value="{{ form_data.nome if form_data else '' }}"><br>
+<label>Email</label>
+<input type="email" name="email" value="{{ form_data.email if form_data else '' }}"><br>
+<label>Senha</label>
+<input type="password" name="senha" id="senha">
+<label>Confirmar Senha</label>
+<input type="password" name="confirmarSenha" id="confirmarSenha"><br>
+<button type="submit">Criar Conta</button>
+<center>
+<p><a href="/login">Já tens conta? Entrar</a></p>
+</center>
+</form>
+{% endblock %}

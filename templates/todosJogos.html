@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+{% with msgs = get_flashed_messages(with_categories=true) %}
+  {% if msgs %}
+    {% for categoria, msg in msgs %}
+      <p><strong>{{ msg }}</strong></p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+{% if jogos %}
+<table id="tabelaJogos">
+    <thead>
+        <tr>
+            <th>Favorito</th>
+            <th>Nome</th>
+            <th>Jogado</th>
+            <th>Possui</th>
+            <th>Coleção</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for jogo in jogos %}
+        <tr>
+
+            <!-- FAVORITO -->
+            <td>
+                {% if jogo.id in favoritos %}
+                    <form method="POST" action="{{ url_for('remover_favoritos') }}">
+                        <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                        <button type="submit" title="Remover dos favoritos">★</button>
+                    </form>
+                {% elif jogo.id in colecao %}
+                    <form method="POST" action="{{ url_for('adicionar_favoritos') }}">
+                        <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                        <button type="submit" title="Adicionar aos favoritos">☆</button>
+                    </form>
+                {% else %}
+                    <span title="Adiciona à coleção primeiro">—</span>
+                {% endif %}
+            </td>
+
+            <!-- NOME -->
+            <td>{{ jogo.nome }}</td>
+
+            <!-- JOGADO -->
+            <td>
+                {% if jogo.id in jogados %}
+                    <form method="POST" action="{{ url_for('remover_jogados') }}">
+                        <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                        <button type="submit" title="Marcar como não jogado">✓</button>
+                    </form>
+                {% elif jogo.id in colecao %}
+                    <form method="POST" action="{{ url_for('adicionar_jogados') }}">
+                        <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                        <button type="submit" title="Marcar como jogado">✗</button>
+                    </form>
+                {% else %}
+                    <span title="Adiciona à coleção primeiro">—</span>
+                {% endif %}
+            </td>
+
+            <!-- POSSUI -->
+            <td>
+                {% if jogo.id in possui %}
+                    <form method="POST" action="{{ url_for('remover_posse') }}">
+                        <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                        <button type="submit" title="Remover da posse">✓</button>
+                    </form>
+                {% elif jogo.id in colecao %}
+                    <form method="POST" action="{{ url_for('adicionar_posse') }}">
+                        <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                        <button type="submit" title="Marcar como possui">✗</button>
+                    </form>
+                {% else %}
+                    <span title="Adiciona à coleção primeiro">—</span>
+                {% endif %}
+            </td>
+
+            <!-- COLEÇÃO -->
+            <td>
+                {% if jogo.id in colecao %}
+                    <form method="POST" action="{{ url_for('remover_colecao') }}">
+                        <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                        <button type="submit">Remover</button>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{{ url_for('adicionar_colecao') }}">
+                        <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                        <button type="submit">Adicionar</button>
+                    </form>
+                {% endif %}
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>Nenhum jogo encontrado.</p>
+{% endif %}
+
+{% endblock %}
