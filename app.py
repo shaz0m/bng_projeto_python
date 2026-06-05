@@ -162,6 +162,101 @@ def todos_jogos():
 
     return render_template("todosJogos.html", utili=utili, jogos = jogos, favoritos = favoritos, jogados = jogados, possui = possui, colecao = colecao)
 
+# -- Filtrar Jogos -------------------------------------------
+@app.route('/filtrar-jogos', methods=["GET"])
+def filtrar_jogos():
+    if "id" not in session:
+        return redirect("/login")
+    
+    filtros = request.args.getlist('filtro')
+    pesquisa = request.args.get('pesquisa', '')
+
+    sqlQuery = "SELECT * FROM jogo WHERE 1=1"
+    parametros = []
+
+    if(pesquisa):
+        sqlQuery += " AND nome LIKE %s"
+        parametros.append('%' + pesquisa + '%')
+
+    if("favoritos" in filtros):
+        sqlQuery += """ AND id IN (
+            SELECT idJogo
+            FROM elementocolecao
+            WHERE idUtilizador = %s
+            AND favorito = 1
+        )"""
+        parametros.append(session["id"])
+
+    if("jogados" in filtros):
+        sqlQuery += """ AND id IN (
+            SELECT idJogo
+            FROM elementocolecao
+            WHERE idUtilizador = %s
+            AND jogado = 1
+        )"""
+        parametros.append(session["id"])
+    if("possui" in filtros):
+        sqlQuery += """ AND id IN (
+            SELECT idJogo
+            FROM elementocolecao
+            WHERE idUtilizador = %s
+            AND posse = 1
+        )"""
+        parametros.append(session["id"])
+
+    if("colecao" in filtros):
+        sqlQuery += """ AND id IN (
+            SELECT idJogo
+            FROM elementocolecao
+            WHERE idUtilizador = %s
+        )"""
+        parametros.append(session["id"])
+
+    bd = obter_ligacao()
+    cursor = bd.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM utilizador WHERE id = %s", (session["id"],))
+    utili = cursor.fetchone()
+
+    cursor.execute(sqlQuery, tuple(parametros))
+    jogos = cursor.fetchall()
+
+    cursor.execute("""
+    SELECT idJogo, favorito, jogado, posse
+    FROM elementocolecao
+    WHERE idUtilizador = %s
+    """, (session["id"],))
+
+    elementos = cursor.fetchall()
+    favoritos = {
+    row["idJogo"]
+    for row in elementos
+    if row["favorito"]
+    }
+
+    jogados = {
+        row["idJogo"]
+        for row in elementos
+        if row["jogado"]
+    }
+
+    possui = {
+        row["idJogo"]
+        for row in elementos
+        if row["posse"]
+    }
+
+    colecao = {
+        row["idJogo"]
+        for row in elementos
+    }
+
+    cursor.close()
+    bd.close()
+
+    return render_template("todosJogos.html", utili=utili, jogos=jogos, favoritos=favoritos, jogados=jogados, possui=possui, colecao=colecao, filtros=filtros, pesquisa=pesquisa
+)
+
 # -- Remover da Coleção -------------------------------------------
 @app.route('/remover-colecao', methods=["POST"])
 def remover_colecao():
