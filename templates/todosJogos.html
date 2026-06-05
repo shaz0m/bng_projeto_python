@@ -5,7 +5,7 @@
 
 <table>
     <tr>
-        <form method="GET" action="{{ url_for('filtrar_jogos') }}">
+        <form method="GET" action="{{ url_for('filtrarJogos') }}">
         <td><input type="checkbox" name="filtro" value="favoritos" onchange="this.form.submit()" {% if "favoritos" in filtros %}checked{% endif %}> Favoritos</td>
         <td><input type="checkbox" name="filtro" value="jogados" onchange="this.form.submit()" {% if "jogados" in filtros %}checked{% endif %}>  Jogado</td>
         <td><input type="checkbox" name="filtro" value="possui" onchange="this.form.submit()" {% if "possui" in filtros %}checked{% endif %}>  Possui</td>
@@ -39,13 +39,13 @@
         <tr>
             <td>
                 {% if jogo.id in favoritos %}
-                    <form method="POST" action="{{ url_for('remover_favoritos') }}">
+                    <form method="POST" action="{{ url_for('removerFavoritos') }}">
                         <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
                         <button type="submit">★</button>
                     </form>
                     
                 {% else %}
-                    <form method="POST" action="{{ url_for('adicionar_favoritos') }}">
+                    <form method="POST" action="{{ url_for('adicionarFavoritos') }}">
                         <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
                         <button type="submit">☆</button>
                     </form>
@@ -54,12 +54,12 @@
             <td>{{ jogo.nome }}</td>
             <td>
                 {% if jogo.id in jogados %}
-                    <form method="POST" action="{{ url_for('remover_jogados') }}">
+                    <form method="POST" action="{{ url_for('removerJogados') }}">
                         <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
                         <button type="submit">✓</button>
                     </form>
                 {% else %}
-                    <form method="POST" action="{{ url_for('adicionar_jogados') }}">
+                    <form method="POST" action="{{ url_for('adicionarJogados') }}">
                         <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
                         <button type="submit">✗</button>
                     </form>
@@ -67,13 +67,13 @@
             </td>
             <td>
                 {% if jogo.id in possui %}
-                    <form method="POST" action="{{ url_for('remover_posse') }}">
+                    <form method="POST" action="{{ url_for('removerPosse') }}">
                         <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
                         <button type="submit">✓</button>
                     </form>
                     
                 {% else %}
-                    <form method="POST" action="{{ url_for('adicionar_posse') }}">
+                    <form method="POST" action="{{ url_for('adicionarPosse') }}">
                         <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
                         <button type="submit">✗</button>
                     </form>
@@ -81,12 +81,12 @@
             </td>
             <td>
                 {% if jogo.id in colecao %}
-                    <form method="POST" action="{{ url_for('remover_colecao') }}">
+                    <form method="POST" action="{{ url_for('removerColecao') }}">
                         <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
                         <button type="submit">Remover</button>
                     </form>
                 {% else %}
-                    <form method="POST" action="{{ url_for('adicionar_colecao') }}">
+                    <form method="POST" action="{{ url_for('adicionarColecao') }}">
                         <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
                         <button type="submit">Adicionar</button>
                     </form>
