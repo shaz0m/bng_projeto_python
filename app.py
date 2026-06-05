@@ -179,38 +179,20 @@ def filtrarJogos():
         parametros.append('%' + pesquisa + '%')
 
     if("favoritos" in filtros):
-        sqlQuery += """ AND id IN (
-            SELECT idJogo
-            FROM elementocolecao
-            WHERE idUtilizador = %s
-            AND favorito = 1
-        )"""
+        sqlQuery += " AND id IN (SELECT idJogo FROM elementocolecao WHERE idUtilizador = %s AND favorito = 1)"
         parametros.append(session["id"])
 
     if("jogados" in filtros):
-        sqlQuery += """ AND id IN (
-            SELECT idJogo
-            FROM elementocolecao
-            WHERE idUtilizador = %s
-            AND jogado = 1
-        )"""
+        sqlQuery += " AND id IN (SELECT idJogo FROM elementocolecao WHERE idUtilizador = %s AND jogado = 1)"
         parametros.append(session["id"])
     if("possui" in filtros):
-        sqlQuery += """ AND id IN (
-            SELECT idJogo
-            FROM elementocolecao
-            WHERE idUtilizador = %s
-            AND posse = 1
-        )"""
+        sqlQuery += " AND id IN (SELECT idJogo FROM elementocolecao WHERE idUtilizador = %s AND posse = 1)"
         parametros.append(session["id"])
 
     if("colecao" in filtros):
-        sqlQuery += """ AND id IN (
-            SELECT idJogo
-            FROM elementocolecao
-            WHERE idUtilizador = %s
-        )"""
+        sqlQuery += " AND id IN (SELECT idJogo FROM elementocolecao WHERE idUtilizador = %s)"
         parametros.append(session["id"])
+
 
     bd = obter_ligacao()
     cursor = bd.cursor(dictionary=True)
@@ -221,35 +203,16 @@ def filtrarJogos():
     cursor.execute(sqlQuery, tuple(parametros))
     jogos = cursor.fetchall()
 
-    cursor.execute("""
-    SELECT idJogo, favorito, jogado, posse
-    FROM elementocolecao
-    WHERE idUtilizador = %s
-    """, (session["id"],))
-
+    cursor.execute("SELECT idJogo, favorito, jogado, posse FROM elementocolecao WHERE idUtilizador = %s", (session["id"],))
     elementos = cursor.fetchall()
-    favoritos = {
-    row["idJogo"]
-    for row in elementos
-    if row["favorito"]
-    }
 
-    jogados = {
-        row["idJogo"]
-        for row in elementos
-        if row["jogado"]
-    }
+    favoritos = {row["idJogo"] for row in elementos if row["favorito"]}
 
-    possui = {
-        row["idJogo"]
-        for row in elementos
-        if row["posse"]
-    }
+    jogados = {row["idJogo"] for row in elementos if row["jogado"]}
 
-    colecao = {
-        row["idJogo"]
-        for row in elementos
-    }
+    possui = {row["idJogo"] for row in elementos if row["posse"]}
+
+    colecao = {row["idJogo"] for row in elementos}
 
     cursor.close()
     bd.close()
