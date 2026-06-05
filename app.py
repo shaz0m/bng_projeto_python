@@ -127,7 +127,7 @@ def perfil():
 
 # -- Todos Jogos -------------------------------------------
 @app.route('/todos-jogos', methods=["GET"])
-def todos_jogos():
+def todosJogos():
      # Proteção
     if "id" not in session:
         return redirect("/login")
@@ -164,7 +164,7 @@ def todos_jogos():
 
 # -- Filtrar Jogos -------------------------------------------
 @app.route('/filtrar-jogos', methods=["GET"])
-def filtrar_jogos():
+def filtrarJogos():
     if "id" not in session:
         return redirect("/login")
     
@@ -259,7 +259,7 @@ def filtrar_jogos():
 
 # -- Remover da Coleção -------------------------------------------
 @app.route('/remover-colecao', methods=["POST"])
-def remover_colecao():
+def removerColecao():
     if "id" not in session:
         return redirect("/login")
 
@@ -279,7 +279,7 @@ def remover_colecao():
 
 # -- Adicionar à Coleção -------------------------------------------
 @app.route('/adicionar-colecao', methods=["POST"])
-def adicionar_colecao():
+def adicionarColecao():
     if "id" not in session:
         return redirect("/login")
 
@@ -299,7 +299,7 @@ def adicionar_colecao():
 
 # -- Adicionar à Favoritos -------------------------------------------
 @app.route('/adicionar-favoritos', methods=["POST"])
-def adicionar_favoritos():
+def adicionarFavoritos():
     if "id" not in session:
         return redirect("/login")
 
@@ -319,7 +319,7 @@ def adicionar_favoritos():
 
 # -- Remover dos Favoritos -------------------------------------------
 @app.route('/remover-favoritos', methods=["POST"])
-def remover_favoritos():
+def removerFavoritos():
     if "id" not in session:
         return redirect("/login")
 
@@ -340,7 +340,7 @@ def remover_favoritos():
 
 # -- Adicionar à Posse -------------------------------------------
 @app.route('/adicionar-posse', methods=["POST"])
-def adicionar_posse():
+def adicionarPosse():
     if "id" not in session:
         return redirect("/login")
 
@@ -360,7 +360,7 @@ def adicionar_posse():
 
 # -- Remover da Posse -------------------------------------------
 @app.route('/remover-posse', methods=["POST"])
-def remover_posse():
+def removerPosse():
     if "id" not in session:
         return redirect("/login")
 
@@ -380,7 +380,7 @@ def remover_posse():
 
 # -- Adicionar à Jogados -------------------------------------------
 @app.route('/adicionar-jogados', methods=["POST"])
-def adicionar_jogados():
+def adicionarJogados():
     if "id" not in session:
         return redirect("/login")
 
@@ -400,7 +400,7 @@ def adicionar_jogados():
 
 # -- Remover dos Jogados -------------------------------------------
 @app.route('/remover-jogados', methods=["POST"])
-def remover_jogados():
+def removerJogados():
     if "id" not in session:
         return redirect("/login")
 
