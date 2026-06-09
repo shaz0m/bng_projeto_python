@@ -125,6 +125,26 @@ def perfil():
     bd.close()
     return render_template('perfil.html', utili=utili, numJogos=numJogos)
 
+#--Homepage--------------------------------------------------------
+@app.route('/home')
+def home():
+    if "id" not in session:
+        return redirect("/login")
+    
+    import random
+    from bd import fetch_all
+
+    top10 = fetch_all(
+        "SELECT id, nome, rankJogo, avaliacaoPublico FROM jogo ORDER BY rankJogo ASC LIMIT 10"
+    )
+
+    todos = fetch_all("SELECT id, nome, avaliacaoPublico FROM jogo")
+    recomendacoes = random.sample(todos, min(3,len(todos)))
+
+    return render_template('home.html', top10=top10, recomendacoes=recomendacoes, utili=session)
+
+
+
 # -- Todos Jogos -------------------------------------------
 @app.route('/todos-jogos', methods=["GET"])
 def todosJogos():
