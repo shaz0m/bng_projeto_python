@@ -125,23 +125,29 @@ def perfil():
     bd.close()
     return render_template('perfil.html', utili=utili, numJogos=numJogos)
 
-#--Homepage--------------------------------------------------------
+# --Homepage----------------------------------------------------------
 @app.route('/home')
 def home():
     if "id" not in session:
         return redirect("/login")
     
-    import random
-    from bd import fetch_all
-
     top10 = fetch_all(
-        "SELECT id, nome, rankJogo, avaliacaoPublico FROM jogo ORDER BY rankJogo ASC LIMIT 10"
+        "SELECT DISTINCT (nome) nome, rankJogo, avaliacaoPublico FROM jogo ORDER BY avaliacaoPublico DESC LIMIT 10"
     )
 
+    bd = obter_ligacao()
+    cursor = bd.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM utilizador WHERE id = %s", (session["id"],))
+    utili = cursor.fetchone()
+
+    cursor.close()
+    bd.close()
+    
     todos = fetch_all("SELECT id, nome, avaliacaoPublico FROM jogo")
     recomendacoes = random.sample(todos, min(3,len(todos)))
 
-    return render_template('home.html', top10=top10, recomendacoes=recomendacoes, utili=session)
+    return render_template('home.html', top10=top10, recomendacoes=recomendacoes, utili=utili)
 
 
 
