@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<div class="listaJogos">
+
+    {% for jogo in jogos %}
+
+    <div class="cardJogo">
+
+        <img src="/static/img/jogos/{{ jogo.imagem }}" alt="{{ jogo.nome }}">
+
+        <h2>{{ jogo.nome }}</h2>
+        <p>{{ jogo.ano }}</p>
+        <p>{{ jogo.minJogadores }} - {{ jogo.maxJogadores }} jogadores</p>
+
+        <div class="estadoJogo">
+            {% if jogo.favorito %}<span> Favorito</span>{% endif %}
+            {% if jogo.jogado %}<span> Jogado</span>{% endif %}
+            {% if jogo.possui %}<span> Possui</span>{% endif %}
+        </div>
+
+        <a href="/jogo/{{ jogo.id }}">Ver Jogo</a>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
