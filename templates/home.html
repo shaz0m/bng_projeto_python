@@ -13,10 +13,11 @@
         <h2>Top 10</h2>
         <ol>
             {% for jogo in top10 %}
-            <li>
-                <span class="nome">{{ jogo.nome }}</span>
+            <span class="nome">
+                <a href="{{url_for('perfil')}}">{{jogo.nome}}</a>
                 <span class="avaliacao">⭐{{ jogo.avaliacaoPublico }}</span>
-            </li>
+            </span>
+
             {% endfor %}
         </ol>
     </section>
@@ -29,7 +30,7 @@
                 <h3>{{ jogo.nome }}</h3>
                 <p>⭐{{ jogo.avaliacaoPublico }}</p>
             </div>    
-            {% endfor %}
+            {% endfor %}    
         </div>
     </section>
 </div>
