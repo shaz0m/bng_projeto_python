@@ -9,7 +9,7 @@
 <body>
     <header>
         <div id="topo">
-            <p>Bem-vindo {{ utili.id }}</p>
+            <p>Bem-vindo, {{ utili.id }}</p>
             <p>Log Out</p>
         </div>
         <div id="logoTopo">
@@ -17,6 +17,7 @@
             <h1>Boards &amp; Games</h1>
         </div>
         <nav>
+            <a href="{{ url_for('admin') }}">Utilizadores</a>
         </nav>
 
         <hr>
