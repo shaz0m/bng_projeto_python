@@ -17,7 +17,7 @@ def dashboard():
     # Unificação das rotas
     if "id" not in session: 
         return redirect("/login") 
-    return redirect("/perfil") 
+    return redirect("/home") 
 
 @app.route('/logout')
 def logout(): 
