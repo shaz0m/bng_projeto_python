@@ -180,46 +180,31 @@ main{
    PERFIL
 ========================= */
 
-#perfil{
-
+#perfil
+{
     display:flex;
-
-    align-items:center;
-
-    gap:40px;
-
-    background:#111827;
-
-    border-radius:24px;
-
-    padding:40px;
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,0.4);
+    flex-direction: row;
+    padding-right: 20px;
+    align-items: center;
 }
 
-#icon{
-
-    width:150px;
-
-    padding:0;
+#icon
+{
+    width: 20%;
+    height: 20%;
+    padding-right: 50px;
 }
 
-#perfil h1{
-
-    font-size:40px;
-
-    margin-bottom:10px;
+#homepage 
+{
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto 0 auto;
+    justify-content: center;
 }
 
-#perfil p{
-
-    color:#cbd5e1;
-
-    margin-bottom:10px;
-
-    font-size:18px;
-}
 
 /* =========================
    LISTA JOGOS
