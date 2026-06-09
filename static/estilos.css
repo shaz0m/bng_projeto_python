@@ -177,6 +177,7 @@ background-color: #e3f2fd;
 {
     display: flex;
     gap: 20px;
+    padding: 20px;
     max-width: 900px;
     margin: 20px auto 0 auto;
     justify-content: center;
@@ -187,7 +188,6 @@ background-color: #e3f2fd;
     flex: 1;
     background: white;
     border-radius: 10%;
-    padding: 20%;
     box-shadow: 0 2px 8px rgba(0,0,0,0, 15);
     height: fit-content;
 }
