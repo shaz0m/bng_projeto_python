@@ -1,0 +1,51 @@
+{% extends "baseAdm.html" %}
+ 
+{% block conteudo %}
+<h2>Utilizadores</h2>
+<form method="GET" action="">
+      <td><input type="text" name="pesquisa" placeholder="pesquisar" value="{{ request.args.get('pesquisa', '') }}"></td>
+      <td><button type="submit">Pesquisar utilizador</button></td>
+</form>
+<form method="POST">
+   <table>
+     <thead>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th></th>
+    </tr>
+   </thead>
+<tbody>
+ 
+            {% for u in utilizadores %}
+     <tr>
+       
+         <td>{{ u.id }}</td>
+        <td>{{ u.email }}</td>
+        <td><button type="submit">Remover Utilizador</button></td>
+ 
+    </tr>
+ 
+            {% endfor %}
+    </tbody>
+  </table>
+      
+  </form>
+ 
+       {% if mensagem %}
+     <div>
+       <p>{{ mensagem }}</p>
+    <form method="POST" action="{{ url_for('confirmar_remover') }}">
+     <input type="hidden" name="utilizador_id" value="{{ utilizador_id }}">
+      <button type="submit" name="resposta" value="sim">Sim</button>
+       <a href="{{ url_for('admin') }}">Cancelar</a>
+  </form>
+</div>
+ 
+   {% endif %}
+<script>
+ 
+</script>
+ 
+{% endblock %}
+ 
