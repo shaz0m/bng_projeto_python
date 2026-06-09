@@ -5,8 +5,10 @@
     <img src="../static/img/user.png" id="icon">
     <div>
         <h1>{{ utili.id }}</h1>
-        <p>{{ utili.biografia }}</p>
-        <p>{{ numJogos }}</p>
+        <p>Biografia</p>
+        <input type="text" value="{{ utili.biografia }}" readonly>
+        
+        <p>Número de Jogos na coleção: {{ numJogos }}</p>
     </div>
 </div>
 
