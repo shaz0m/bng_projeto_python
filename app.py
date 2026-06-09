@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import mysql.connector
-from bd import obter_ligacao
+from bd import obter_ligacao, fetch_all
+import random
 import hashlib
 import re
 from flask_session import Session
 from typing import Any, cast
+
 
 app = Flask(__name__)
 
