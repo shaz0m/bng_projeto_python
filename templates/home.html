@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<style>
+    main{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+</style>
+
+<div id="homepage" style="margin-top: 20px;">
+    <section id="top10">
+        <h2>Top 10</h2>
+        <ol>
+            {% for jogo in top10 %}
+            <li>
+                <span class="nome">{{ jogo.nome }}</span>
+                <span class="avaliacao">⭐{{ jogo.avaliacaoPublico }}</span>
+            </li>
+            {% endfor %}
+        </ol>
+    </section>
+
+    <section id="recomendacoes">
+        <h2>Recomendações</h2>
+        <div id="cards-recomendacoes">
+            {% for jogo in recomendacoes %}
+            <div class="card-jogo">
+                <h3>{{ jogo.nome }}</h3>
+                <p>⭐{{ jogo.avaliacaoPublico }}</p>
+            </div>    
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+{% endblock %}
