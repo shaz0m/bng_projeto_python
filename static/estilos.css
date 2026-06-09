@@ -117,15 +117,119 @@ background-color: #e3f2fd;
     color: white;
 }
 
+#logo
+{
+    width: 22%;
+    transform: translateX(50%);
+}
+
+#logoTopo {
+    position: relative;       
+    display: flex;
+    align-items: last baseline;     
+    padding: 0 20px;
+    padding-left: 20px;     
+    margin-bottom: 30px;  
+    margin-top: 30px;  
+}
+
+#logoTopo h1 {               
+    position: absolute;
+    left: 50%;
+    transform: translateX(-40%); 
+    margin: 0;
+    padding-bottom: 40px;
+    padding-left: 60px;
+    font-size: 40px;
+}
+
+#topo
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    align-items: center;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#topo a
+{
+    color: white;
+}
+
 #perfil
 {
     display:flex;
     flex-direction: row;
     padding-right: 20px;
+    align-items: center;
 }
 
 #icon
 {
     width: 20%;
+    height: 20%;
     padding-right: 50px;
+}
+
+#homepage 
+{
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    max-width: 900px;
+    margin: 20px auto 0 auto;
+    justify-content: center;
+}
+
+#top10, #recomendacoes
+{
+    flex: 1;
+    background: white;
+    border-radius: 10%;
+    padding: 20%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0, 15);
+    height: fit-content;
+}
+
+#top10 h2, #recomendacoes h2
+{
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+#top10 ol
+{
+    padding-left: 20px;
+    margin: 0;
+}
+
+#top10 li
+{
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-jogo
+{
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.card-jogo h3
+{
+    margin: 0 0 5px 0;
+    font-size: 1em;
+}
+
+.card-jogo p
+{
+    margin: 0;
+    color: #666;
 }
