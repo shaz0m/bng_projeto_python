@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import mysql.connector
 from bd import obter_ligacao
 import hashlib
@@ -118,7 +118,7 @@ def perfil():
     utili = cursor.fetchone()
 
     cursor.execute("SELECT count(*) AS total FROM elementocolecao WHERE idUtilizador = %s", (session["id"],))
-    numJogos = cursor.fetchone()
+    numJogos = cursor.fetchone()["total"]
     
     cursor.close()
     bd.close()
@@ -321,6 +321,59 @@ def remover_jogados():
 
     flash("Jogo removido dos jogados.")
     return redirect("/todos-jogos")
+
+# -----------------------------------------------------------------
+#    API REST
+# -----------------------------------------------------------------
+# -- GETs ---------------------------------------------------------
+@app.route("/api/utilizadores", methods=["GET"])
+def apiListarUtilizadores():
+    bd = obter_ligacao()
+    cursor = bd.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM utilizador")
+    utilizadores = cursor.fetchall()
+
+    cursor.close()
+    bd.close()
+
+    return jsonify(utilizadores)
+
+@app.route("/api/jogos", methods=["GET"])
+def apiListarJogos():
+    bd = obter_ligacao()
+    cursor = bd.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM jogo")
+    jogos = cursor.fetchall()
+
+    cursor.close()
+    bd.close()
+
+    return jsonify(jogos)
+
+@app.route("/api/elementoscolecao", methods=["GET"])
+def apiListarElementosColecao():
+    bd = obter_ligacao()
+    cursor = bd.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM elementocolecao")
+    elementosColecao = cursor.fetchall()
+
+    cursor.close()
+    bd.close()
+
+    return jsonify(elementosColecao) 
+# -----------------------------------------------------------------
+# -- POSTs --------------------------------------------------------
+
+# -----------------------------------------------------------------
+# -- PUTs ---------------------------------------------------------
+
+# -----------------------------------------------------------------
+# -- DELETEs ------------------------------------------------------
+
+# -----------------------------------------------------------------
 
 #Coleção, Favoritos, Posse e Jogados são atualizados em tempo real na página de todos os jogos, sem necessidade de recarregar a página.
 if __name__ == "__main__":
