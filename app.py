@@ -46,9 +46,34 @@ def login():
         else:
             session["id"] = user_id
             session["tipoConta"] = utilizador.get("tipoConta")
-            return redirect("/") # Correção
 
+            if(session["tipoConta"] == 0):
+                return redirect("/") # Change to cliente !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+            elif(session["tipoConta"] == 1):
+                return redirect("/admin") # Change to admin
+                
     return render_template('login.html')
+
+# -- ADMIN ------ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+
+    bd = obter_ligacao()
+    cursor = bd.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM utilizador WHERE id = %s", (session["id"],))
+    utili = cursor.fetchone()
+
+
+    cursor.execute("SELECT * FROM utilizador")
+    utilizadores = cursor.fetchall()
+
+
+    cursor.close()
+    bd.close()
+
+    return render_template('homeAdmin.html', utili = utili, utilizadores = utilizadores)
 
 # -- Criação de Conta ----------------------------------------------
 @app.route('/criar-conta', methods=['GET', 'POST'])
