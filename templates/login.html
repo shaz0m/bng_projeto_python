@@ -3,6 +3,13 @@
 {% block conteudo %}
 <h2>Login</h2>
 
+{% with msgs = get_flashed_messages(with_categories=true) %}
+  {% if msgs %}
+    {% for categoria, msg in msgs %}
+<p><strong>{{ msg }}</strong></p> <!--CHANGE COLOR TO RED-->
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 <form method="POST">
     <label>Nome do Utilizador</label>
