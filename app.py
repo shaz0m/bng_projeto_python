@@ -181,6 +181,75 @@ def home():
 
     return render_template('home.html', top10=top10, recomendacoes=recomendacoes, utili=utili)
 
+# -- Jogo Detalhes --------------------------------------------------------
+@app.route('/jogo/<int:idJogo>', methods=["GET"])
+def jogo(idJogo):
+    if "id" not in session:
+        return redirect("/login")
+
+    bd = obter_ligacao()
+    cursor = bd.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM utilizador WHERE id = %s", (session["id"],))
+    utili = cursor.fetchone()
+
+    cursor.execute("SELECT * FROM jogo WHERE id = %s", (idJogo,))
+    jogo = cursor.fetchone()
+
+    cursor.execute("SELECT * FROM elementocolecao WHERE idUtilizador = %s", (session["id"],))
+    colecao_db = cursor.fetchall()
+    colecao = {row["idJogo"] for row in colecao_db}
+
+    favoritos = {row["idJogo"] for row in colecao_db if row["favorito"]}
+    jogados = {row["idJogo"] for row in colecao_db if row["jogado"]}
+    possui = {row["idJogo"] for row in colecao_db if row["posse"]}
+
+    cursor.close()
+    bd.close()
+
+
+    return render_template('jogo.html', jogo=jogo, utili=utili, colecao=colecao, favoritos=favoritos, jogados=jogados, possui=possui)
+
+
+# -- Remover da Coleção JOGO -------------------------------------------
+@app.route('/remover-colecao/jogo', methods=["POST"])
+def removerColecaoJogo():
+    if "id" not in session:
+        return redirect("/login")
+
+    idJogo = request.form.get('jogo_id')
+
+    bd = obter_ligacao()
+    cursor = bd.cursor()
+
+    cursor.execute("DELETE FROM elementocolecao WHERE idUtilizador = %s AND idJogo = %s", (session["id"], idJogo))
+    bd.commit()
+
+
+    cursor.close()
+    bd.close()
+
+    return redirect("/jogo/" + str(idJogo))
+
+# -- Adicionar à Coleção JOGO -------------------------------------------
+@app.route('/adicionar-colecao/jogo', methods=["POST"])
+def adicionarColecaoJogo():
+    if "id" not in session:
+        return redirect("/login")
+
+    idJogo = request.form.get('jogo_id')
+
+    bd = obter_ligacao()
+    cursor = bd.cursor()
+
+    cursor.execute("INSERT INTO elementocolecao (idUtilizador, idJogo, posse, jogado, favorito) VALUES (%s, %s, %s, %s, %s)", (session["id"], idJogo, 0, 0, 0))
+    bd.commit()
+
+    cursor.close()
+    bd.close()
+
+    return redirect('/jogo/' + str(idJogo))
+
 
 
 # -- Todos Jogos -------------------------------------------
