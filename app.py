@@ -17,7 +17,12 @@ def dashboard():
     # Unificação das rotas
     if "id" not in session: 
         return redirect("/login") 
-    return redirect("/home") 
+
+    if session.get("tipoConta") == 0: 
+        return redirect("/home")
+    
+    elif session.get("tipoConta") == 1:
+        return redirect("/admin/utilizadores")
 
 @app.route('/logout')
 def logout(): 
@@ -58,7 +63,7 @@ def login():
     return render_template('login.html')
 
 # -- ADMIN ------ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-@app.route('/admin', methods=['GET', 'POST'])
+@app.route('/admin/utilizadores', methods=['GET', 'POST'])
 def admin():
 
     bd = obter_ligacao()
