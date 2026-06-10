@@ -4,53 +4,45 @@
 
 <div id="detalheJogo">
 
-    <div id="imagemJogo">
-        <img src="/static/img/jogos/{{ jogo.imagem }}" alt="{{ jogo.nome }}">
-    </div>
 
     <div id="infoJogo">
 
         <div id="cabecalhoJogo">
-            <h1>{{ jogo.nome }}</h1>
-            <p>Rank: {{ jogo.rank }}</p>
+            <table>
+                <tr>
+                    <td><h1>{{ jogo.nome }}</h1></td>
+                    <td><h1>⭐{{ jogo.rankJogo }}</h1></td>
+                </tr>
+            </table>
         </div>
 
-        <p>Ano publicado: {{ jogo.ano }}</p>
-        <p>Min Jogadores: {{ jogo.minJogadores }}</p>
-        <p>Max Jogadores: {{ jogo.maxJogadores }}</p>
+        <p>Ano publicado: {{ jogo.anoPublicado }}</p>
+        <p>Jogadores (min - max): {{ jogo.minJogadores }} - {{ jogo.maxJogadores }}</p>
         <p>Min Idade: {{ jogo.minIdade }}</p>
-        <p>Duração de partida média: {{ jogo.duracaoMedia }} min</p>
-        <p>Avaliação: {{ jogo.avaliacao }} ({{ jogo.numAvaliacoes }} avaliações)</p>
+        <p>Duração de partida média: {{ jogo.mediaDuracao }} minutos</p>
+        <p>Avaliação publico: {{ jogo.avaliacaoPublico }} ({{ jogo.numAvaliacoes }} avaliações)</p>
 
-        <form method="POST" action="/jogo/{{ jogo.id }}">
 
-            <label>
-                <input type="checkbox" name="favorito"
-                {% if elemento and elemento.favorito %}checked{% endif %}>
-                Favorito
-            </label>
+        <table>
+            <tr>
+                <td>{% if jogo.id in favoritos%}Favorito{% else %}Não Favorito{% endif %}</td>
+                <td>{% if jogo.id in jogados %}Jogado{% else %}Não Jogado{% endif %}</td>
+                <td>{% if jogo.id in possui %}Possui{% else %}Não Possui{% endif %}</td>
+            </tr>
+        </table>
 
-            <label>
-                <input type="checkbox" name="jogado"
-                {% if elemento and elemento.jogado %}checked{% endif %}>
-                Jogado
-            </label>
 
-            <label>
-                <input type="checkbox" name="possui"
-                {% if elemento and elemento.possui %}checked{% endif %}>
-                Possui
-            </label>
-
-            <button type="submit">
-                {% if elemento %}
-                    Guardar alterações
-                {% else %}
-                    Adicionar à minha coleção
-                {% endif %}
-            </button>
-
-        </form>
+        {% if jogo.id in colecao %}
+                <form method="POST" action="{{ url_for('removerColecaoJogo') }}">
+                    <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                    <button type="submit">Remover da minha coleção</button>
+                </form>
+            {% else %}
+                <form method="POST" action="{{ url_for('adicionarColecaoJogo') }}">
+                    <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+                    <button type="submit">Adicionar à minha coleção</button>
+                </form>
+        {% endif %}
 
     </div>
 
