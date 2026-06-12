@@ -119,7 +119,7 @@ def perfil():
     utili = cursor.fetchone()
 
     cursor.execute("SELECT count(*) AS total FROM elementocolecao WHERE idUtilizador = %s", (session["id"],))
-    numJogos = cursor.fetchone()
+    numJogos = cursor.fetchone().get("total")
     
     cursor.close()
     bd.close()
