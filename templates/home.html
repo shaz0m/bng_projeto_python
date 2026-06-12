@@ -7,7 +7,7 @@
         <ol>
             {% for jogo in top10 %}
             <span class="nome">
-                <a href="{{url_for('perfil')}}">{{jogo.nome}}</a>
+                <a href="{{ url_for('jogo', idJogo=jogo.id) }}">{{jogo.nome}}</a>
                 <span class="avaliacao">⭐{{ jogo.avaliacaoPublico }}</span>
             </span>
 
